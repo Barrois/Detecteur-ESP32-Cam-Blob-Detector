@@ -18,6 +18,9 @@ Il y a deux solutions en cours de  recherche :
 
 Ce qui est fait : la détection, la prise de photo, et une partie de l'analyse 
 
+La détection par FFT et la sauvegarde sur car SD :  ESP_CAM_timelapse_detector_Etienne_0.ino 
+L'analyse et la localisation : decoder_jpeg_07_4.ino 
+
 Ce qui reste à faire :
 - garder la photo en mémoire SPIFFS pour gagner du temps
 - envoyer et recevoir les coordonnées  de l'ESP32-CAM à l'Arduino via Tx-Rx
