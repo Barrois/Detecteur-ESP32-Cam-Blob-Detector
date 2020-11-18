@@ -1,4 +1,4 @@
-# Detecteur-ESP32-Cam
+# Detecteur-ESP32-Cam : Blob Detector
 
 - Détection et prise de photo du frelon asiatique en vol stationnaire en moins d'une seconde.
 
