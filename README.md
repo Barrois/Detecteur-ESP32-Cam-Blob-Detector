@@ -26,13 +26,14 @@ Il y a deux solutions en cours de  recherche :
 Ce qui est fait : la détection, la prise de photo, l'analyse et la localisation en pixel dans la phot
 
 La détection par FFT et la sauvegarde sur carte SD :  ESP_CAM_timelapse_detector_Etienne_0.ino 
+
 L'analyse en partant des photos mises en mémoires SPIFFS et la localisation du Blob : decoder_jpeg_08_1.ino 
 
-Ce qui reste à faire :
-- garder la photo en mémoire pour gagner du temps sinon relire la carte sd pour analyser la photo
-et là j'ai trouvé une perle dans le domaine :  https://github.com/eloquentarduino/EloquentArduino
+La prise de photo et l'analyse de blob grace à l'excellent EloquentArduino : https://github.com/eloquentarduino/EloquentArduino
 et son : https://eloquentarduino.github.io/2020/01/motion-detection-with-esp32-cam-only-arduino-version/
-Il revendique une détection en 200ms !!! J'ai du pain sur la planche car ça rend le suivi du frelon possible !
+Une détection d'un blob 4x4 dans une photo 320x240 en 180ms !!! = : ESP32CameraNaiveMotionDetection_1.ino
+
+Ce qui reste à faire :
 - envoyer et recevoir les coordonnées  de l'ESP32-CAM à l'Arduino via Tx-Rx
 - déclencher le tir du laser 10W alimenté en 12v 5A !!!
 - sauver la photo avec les coordonnées du tir pour la postérité.
