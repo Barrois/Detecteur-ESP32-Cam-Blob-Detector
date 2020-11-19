@@ -29,7 +29,10 @@ La détection par FFT et la sauvegarde sur carte SD :  ESP_CAM_timelapse_detecto
 L'analyse en partant des photos mises en mémoires SPIFFS et la localisation du Blob : decoder_jpeg_08_1.ino 
 
 Ce qui reste à faire :
-- garder la photo en mémoire SPIFFS pour gagner du temps sinon relire la carte sd pour analyser la photo
+- garder la photo en mémoire pour gagner du temps sinon relire la carte sd pour analyser la photo
+et là j'ai trouvé une perle dans le domaine :  https://github.com/eloquentarduino/EloquentArduino
+et son : https://eloquentarduino.github.io/2020/01/motion-detection-with-esp32-cam-only-arduino-version/
+Il revendique une détection en 200ms !!! J'ai du pain sur la planche car ça rend le suivi du frelon possible !
 - envoyer et recevoir les coordonnées  de l'ESP32-CAM à l'Arduino via Tx-Rx
 - déclencher le tir du laser 10W alimenté en 12v 5A !!!
 - sauver la photo avec les coordonnées du tir pour la postérité.
