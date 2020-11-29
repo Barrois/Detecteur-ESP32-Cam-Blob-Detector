@@ -1,8 +1,8 @@
-# Detecteur-ESP32-Cam : Blob Detector
+# Detecteur-ESP32-Cam : Blob Detector Localisator
 
 - Détection et prise de photo du frelon asiatique en vol stationnaire en moins d'une seconde.
 
-- Localisation d'un Blob dans une photo JPEG/jpg en 300ms pour une résolution 320x240.
+- Localisation d'un Blob dans une photo JPEG/jpg en 180ms pour une résolution 320x240.
 
 Après analyse des fréquences émises lors du vol stationnaire du frelon devant une ruche, 
 nous avons mis au point un filtre FFT qui donne satisfaction puisqu'il a permit de détecter des frelons dans 5 sites différents en France durant l'été 2020 : Limoux, Limoges, Toulouse, Nice et Caen. 
