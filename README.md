@@ -19,9 +19,9 @@ Les coordonnées seront transmises à un Pan-Tilt guidé par un Arduino et équi
 
 Il y a deux solutions en cours de  recherche :
 
-- 1 -  Un ESP32-CAM détecte acoustiquement le Frelon asiatique, prend la photo en 320x240, l'analyse et transmet les coordonnées à un Arduino qui  anime un Pan-Tilt équipé d'un laser. Actuellement c'est la solution explorée, la détection prend moins d'une seconde et la localisation 300ms.
+- 1 -  Un ESP32-CAM détecte acoustiquement le Frelon asiatique, prend la photo en 320x240, l'analyse et transmet les coordonnées à un Arduino qui anime un Pan-Tilt équipé d'un laser. Actuellement c'est la solution explorée, la détection prend moins d'une seconde et la localisation 300ms.
 
-- 2 - un EPS32 équipé d'un Shield OV7670 et d'un Shield SD ,  détecte le frelon , prend la photo en 80x60, l'analyse et anime le Pan-Tilt équipé du laser.
+- 2 - un ESP32 équipé d'un Shield OV7670 et d'un Shield SD, détecte le frelon, prend la photo en 80x60, l'analyse et anime le Pan-Tilt équipé du laser.
 
 Ce qui est fait : la détection, la prise de photo, l'analyse et la localisation en pixel dans la phot
 
