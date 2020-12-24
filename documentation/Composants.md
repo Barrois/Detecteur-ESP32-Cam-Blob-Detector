@@ -4,11 +4,11 @@
 
 - un ESP32-CAM
 
-- un micro type Max981
+- un micro type Max9814
 
 - (une carte Sd)
 
-- un interrupteur pour l'alimenation
+- un interrupteur pour l'alimentation
 
 - un interrupteur pour désactiver la sortie du micro au démarrage de l'ESP32 (port GPIO0 utilisé pour passer en mode flash)
 
@@ -17,7 +17,7 @@
 
 ## Montage
 
-La sortie du Max981 est reliée sur l'entrée GIPO0 de l'ESP32-CAM.
+La sortie du Max9814 est reliée sur l'entrée GIPO0 de l'ESP32-CAM.
 
 Un interrupteur permet de déconnecter les deux au démarrage de l'ESP-32 afin qu'il ne passe pas en mode "flash".
 
