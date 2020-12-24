@@ -60,9 +60,9 @@ marque un tournant dans la détection : après son analyse, seule la première h
 Et sans doute allons-nous modifier aussi le dispositif suivant son idée : un micro sur le devant de la ruche et un micro d'ambiance,
 afin de supprimer les faux positifs dus à l'environnement (mobylette et autres..) et donc raccourcir le temps de détection.
 
-Dernière nouvelle : un canon a été experimenté avec succés par Ptitlab et son ami bbruno: depuis 2017 ils tirent le frelon !!!
-https://drive.google.com/file/d/16ssjIsU98TqoQO_uRPv50JdfcAjg1aXl/view?usp=sharing
-plus de renseignements sur : http://ruchewarre.net/viewtopic.php?f=175&t=10218 
+Dernière nouvelle : un canon a été experimenté avec succés par Ptitlab et son ami bbruno: 
+ depuis 2017 ils tirent le frelon :  https://drive.google.com/file/d/16ssjIsU98TqoQO_uRPv50JdfcAjg1aXl/view?usp=sharing
+ plus de renseignements sur : http://ruchewarre.net/viewtopic.php?f=175&t=10218 
 Nous attendons beaucoup de cette collaboration.
 
 Si vous avez des idées pour tuer les frelons asiatiques, merci de nous en faire part 
