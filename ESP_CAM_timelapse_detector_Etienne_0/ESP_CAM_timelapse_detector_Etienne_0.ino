@@ -67,11 +67,11 @@ arduinoFFT FFT = arduinoFFT();
 unsigned int sampling_period_us;
 double vReal1[SAMPLES];
 double vImag1[SAMPLES];
-int bb =55; // nb de frequence qu'on garde 
+int bb =55; // nb de frequence qu'on garde
 double traceur [275]={0}; // pour sauver les 5 FFT de 55 nombres
 /*
 //   tracer de la FFT  voir l'exemple FFT_01
-#define SCL_FREQUENCY 0x02 
+#define SCL_FREQUENCY 0x02
 #define SCL_INDEX 0x00
 #define SCL_TIME 0x01
 #define SCL_FREQUENCY 0x02
@@ -94,11 +94,11 @@ int Cpt_Attaque=0;
 void setup() {
     // initialize EEPROM with predefined size
   EEPROM.begin(EEPROM_SIZE);
-  file_number = EEPROM.read(0) + 1;  
-  
+  file_number = EEPROM.read(0) + 1;
+
   Serial.begin(115200);
   Serial.println(__FILE__);
-      pinMode(0, INPUT);  // entrée son sur GPIO 0
+  pinMode(0, INPUT);  // entrée son sur GPIO 0
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
   config.ledc_timer = LEDC_TIMER_0;
@@ -145,9 +145,10 @@ void setup() {
   sampling_period_us = round(1000000 * (1.0 / SAMPLING_FREQUENCY));
   pinMode(Relai_Ext, OUTPUT);
 
-  // prise d'une photo 
-   save_photo_numbered(); 
+  // prise d'une photo
+   save_photo_numbered();
 }
+
 static esp_err_t init_sdcard(){
   esp_err_t ret = ESP_FAIL;
   sdmmc_host_t host = SDMMC_HOST_DEFAULT();
@@ -167,6 +168,7 @@ static esp_err_t init_sdcard(){
     Serial.printf("Failed to mount SD card VFAT filesystem. Error: %s", esp_err_to_name(ret));
   }
 }
+
 static esp_err_t save_photo_numbered(){
   Serial.print("Taking picture: ");
   Serial.println(file_number);
@@ -189,6 +191,7 @@ static esp_err_t save_photo_numbered(){
   esp_camera_fb_return(fb);
   free(filename);
 }
+
 static esp_err_t save_FFT_numbered(){
   Serial.print("Taking FFT: ");
   Serial.println(file_number);
@@ -196,26 +199,27 @@ static esp_err_t save_FFT_numbered(){
   sprintf(filename, "/sdcard/FFT_%d.txt", file_number);
   Serial.println(filename);
   FILE *file = fopen(filename, "w");
-  if (file != NULL)  {
-      for (int i = 0; i < 5*bb; i++) { // 500 = 100 * 5 
-          char x_buffer[20];
-          dtostrf(traceur[i], 5,1, x_buffer);
+  if (file != NULL) {
+    for (int i = 0; i < 5*bb; i++) { // 500 = 100 * 5
+      char x_buffer[20];
+      dtostrf(traceur[i], 5,1, x_buffer);
       fprintf(file,x_buffer);
-      fprintf(file,";"); 
-       }
-       }  
-       else  {
+      fprintf(file,";");
+    }
+  }
+  else {
     Serial.println("Could not open file");
   }
   fclose(file);
   free(filename);
 }
-void loop(){  
+
+void loop(){
   digitalWrite(Relai_Ext, LOW);   // relai externe mis bas
-      //
-      //   prise de son et création de sa FFT
-      //
-    for (int i = 0; i < SAMPLES; i++) {
+    //
+    //   prise de son et création de sa FFT
+    //
+  for (int i = 0; i < SAMPLES; i++) {
     newTime  = micros();         //  lecture du son via un micro mis en GPIO0
     vReal1[i] = analogRead(0);   //  Using pin number for ADC port ici GPIO0
     vImag1[i] = 0;
@@ -224,7 +228,7 @@ void loop(){
   FFT.Windowing(vReal1, SAMPLES, FFT_WIN_TYP_HAMMING, FFT_FORWARD);
   FFT.Compute(vReal1, vImag1, SAMPLES, FFT_FORWARD);
   FFT.ComplexToMagnitude(vReal1, vImag1, SAMPLES);
-  // calcul du pic   
+  // calcul du pic
   double pic1 = FFT.MajorPeak(vReal1, SAMPLES, SAMPLING_FREQUENCY);
   Serial.print("MajorPeak : ");
   Serial.print(pic1);
@@ -245,118 +249,119 @@ void loop(){
   Serial.print(" : ");
   Serial.print(vReal1[42]);
   Serial.print(" : ");
-  Serial.println(vReal1[43]);  
-  
+  Serial.println(vReal1[43]);
+
   /*
   Serial.println(pic1, 2);
            for (int i = 2; i < 20; i++) { // i = 2 pour éliminer les basses fréquences < 78 Hz
             Serial.print(vReal1[i]);
             Serial.print("  ");
-                 }        
+                 }
             Serial.println("fin du vecteur FFT");
   */
 //
 // début des tests de frelons asiatiques
-// 
+//
        // on cherche si le pic = 234 +- 10%
-      if (pic1 >210  && pic1 <=260) {   
-       // les valeurs en 18, 36 et 42 sont-elles des pics ? 
-       int test_pic  = 0;     
-      if (vReal1[18] > (0.66* (vReal1[17]+ vReal1[19]))     ) test_pic++;   // pic en 351 en SAMPLES 2048   
-      if (vReal1[36] > (0.66* (vReal1[35]+ vReal1[37]))     ) test_pic++;   // pic en 703 en SAMPLES 2048      
-      if (vReal1[42] > (0.66* (vReal1[41]+ vReal1[43]))     ) test_pic++;   // pic en 820 en SAMPLES 2048
-      if  (test_pic = 3) {
-    // si la somme des trois pics secondaires est supérieure au pic principal => FRELON !!            
-      double val_pic = vReal1[6];    
+  if (pic1 >210  && pic1 <=260) {
+    // les valeurs en 18, 36 et 42 sont-elles des pics ?
+    int test_pic  = 0;
+    if (vReal1[18] > (0.66* (vReal1[17]+ vReal1[19]))     ) test_pic++;   // pic en 351 en SAMPLES 2048
+    if (vReal1[36] > (0.66* (vReal1[35]+ vReal1[37]))     ) test_pic++;   // pic en 703 en SAMPLES 2048
+    if (vReal1[42] > (0.66* (vReal1[41]+ vReal1[43]))     ) test_pic++;   // pic en 820 en SAMPLES 2048
+    if  (test_pic = 3) {
+      // si la somme des trois pics secondaires est supérieure au pic principal => FRELON !!
+      double val_pic = vReal1[6];
       double val_pic2 = (vReal1[18]+vReal1[36]+vReal1[42]);
-      if (val_pic2 > val_pic )  {
-        
+      if (val_pic2 > val_pic ) {
+
         // soupçon de frelon => on garde la trace de la FFT
 
-          // enregistrement de la FFT 
-             Serial.print("debut du vecteur FFT : ");
-             Serial.println(Nb_chrono);
-          // mise en tableau des 5 parties réelles vecteurs de la FFT
-           for (int i = 2; i < bb; i++) { // i = 2 pour éliminer les basses fréquences < 78 Hz
-            traceur [Nb_chrono*bb+i] = vReal1 [i];  
-            Serial.print(traceur [i]);
-            Serial.print("  ");
-                 }        
-            Serial.println("fin du vecteur FFT");
+        // enregistrement de la FFT
+        Serial.print("debut du vecteur FFT : ");
+        Serial.println(Nb_chrono);
+        // mise en tableau des 5 parties réelles vecteurs de la FFT
+        for (int i = 2; i < bb; i++) { // i = 2 pour éliminer les basses fréquences < 78 Hz
+        traceur [Nb_chrono*bb+i] = vReal1 [i];
+          Serial.print(traceur [i]);
+          Serial.print("  ");
+        }
+        Serial.println("fin du vecteur FFT");
         //    Serial.println("Computed magnitudes: apres _1 ");
         //    PrintVector(traceur, bb, SCL_FREQUENCY);
-  Serial.print("0_Nb_chrono : ");
-  Serial.print (Nb_chrono);
-  Serial.print(" chrono1 : ");
-  Serial.print (chrono1);  
-  Serial.print(" chrono2 : ");
-  Serial.println(chrono2);            
-    // est-ce que il y a  5 pics en 235 en moins de 30 secondes ? 
-        chrono2 = millis(); // demarrage du chrono 2  
-       if (Nb_chrono == 0) {
-       chrono1 = chrono2 ;  // remise à l'heure du compteur 1 
-       }     
-       unsigned long interval;     
-       interval = chrono2 - chrono1 ;
-  Serial.print("1_Nb_chrono : ");
-  Serial.print (Nb_chrono);
-  Serial.print(" chrono1 : ");
-  Serial.print (chrono1);
-  Serial.print(" interval : ");
-  Serial.print (interval);  
-  Serial.print(" chrono2 : ");
-  Serial.println(chrono2);
-     if (interval < 5000 ) {     // les deux pics sont séparés de moins de 5s
-                            chrono1 = chrono2;
-                            chrono2 = millis();
-                            Nb_chrono++;
-                            delay(100); // attente 
-                            }
-                     else { Nb_chrono = 0;}   // remise à zero du compteur
-  Serial.print("2_Nb_chrono : ");
-  Serial.print (Nb_chrono);
-  Serial.print(" chrono1 : ");
-  Serial.print (chrono1);
-  Serial.print(" interval : ");
-  Serial.print (interval);  
-  Serial.print(" chrono2 : ");
-  Serial.println(chrono2);
-                       
-    if ( Nb_chrono > 4 ) {     // !!!! FRELON !!!!          
-         Nb_chrono=0;       
-    // affichage alerte  FRELON !     
-      Serial.println("  A L E R T E ");
-      Serial.println(" F R E L O N S");
-      Serial.println("   /-------!  ");      
-      Serial.println("   !  o-o  !  ");
-      Serial.println("   !  (!)  ! ");
-      Serial.println("   !___!___/  ");
-   // mise du relai externe en G16 High
-     digitalWrite(Relai_Ext, HIGH);     
+        Serial.print("0_Nb_chrono : ");
+        Serial.print (Nb_chrono);
+        Serial.print(" chrono1 : ");
+        Serial.print (chrono1);
+        Serial.print(" chrono2 : ");
+        Serial.println(chrono2);
+        // est-ce que il y a  5 pics en 235 en moins de 30 secondes ?
+        chrono2 = millis(); // demarrage du chrono 2
+        if (Nb_chrono == 0) {
+          chrono1 = chrono2 ;  // remise à l'heure du compteur 1
+        }
+        unsigned long interval;
+        interval = chrono2 - chrono1 ;
+        Serial.print("1_Nb_chrono : ");
+        Serial.print (Nb_chrono);
+        Serial.print(" chrono1 : ");
+        Serial.print (chrono1);
+        Serial.print(" interval : ");
+        Serial.print (interval);
+        Serial.print(" chrono2 : ");
+        Serial.println(chrono2);
+        if (interval < 5000 ) {
+          // les deux pics sont séparés de moins de 5s
+          chrono1 = chrono2;
+          chrono2 = millis();
+          Nb_chrono++;
+          delay(100); // attente
+        }
+        else { Nb_chrono = 0;}   // remise à zero du compteur
+        Serial.print("2_Nb_chrono : ");
+        Serial.print (Nb_chrono);
+        Serial.print(" chrono1 : ");
+        Serial.print (chrono1);
+        Serial.print(" interval : ");
+        Serial.print (interval);
+        Serial.print(" chrono2 : ");
+        Serial.println(chrono2);
 
-     save_FFT_numbered();
-     delay(1000);
-    file_number++;
-    EEPROM.write(0, file_number);
-    EEPROM.commit();
-     /*
-     delay(1000);
-     save_photo_numbered();
-    // on endort la bete !!!
-    esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
-    esp_deep_sleep_start();
-    Serial.println("This will never be printed");
-    */
-    ESP.restart();  // redémarrage      
-    }            
+        if ( Nb_chrono > 4 ) {     // !!!! FRELON !!!!
+          Nb_chrono=0;
+          // affichage alerte  FRELON !
+          Serial.println("  A L E R T E ");
+          Serial.println(" F R E L O N S");
+          Serial.println("   /-------!  ");
+          Serial.println("   !  o-o  !  ");
+          Serial.println("   !  (!)  ! ");
+          Serial.println("   !___!___/  ");
+          // mise du relai externe en G16 High
+          digitalWrite(Relai_Ext, HIGH);
+
+          save_FFT_numbered();
+          delay(1000);
+          file_number++;
+          EEPROM.write(0, file_number);
+          EEPROM.commit();
+          /*
+          delay(1000);
+          save_photo_numbered();
+          // on endort la bete !!!
+          esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
+          esp_deep_sleep_start();
+          Serial.println("This will never be printed");
+          */
+          ESP.restart();  // redémarrage
+        }
+      }
     }
-    }  
-    }   // fin des tests           
-    }   // fin de LOOP
+  }   // fin des tests
+}   // fin de LOOP
 
-/*    
+/*
 void PrintVector(double *vData, uint16_t bufferSize, uint8_t scaleType)
-// tracer de la FFT    voir la fin de l'exemple FFT_01 
+// tracer de la FFT    voir la fin de l'exemple FFT_01
 {  for (uint16_t i = 0; i < bufferSize; i++)
   {    double abscissa;
     // Print abscissa value //
@@ -378,4 +383,4 @@ void PrintVector(double *vData, uint16_t bufferSize, uint8_t scaleType)
   }
   Serial.println();
 }
- */   
+ */
