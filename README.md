@@ -60,11 +60,44 @@ marque un tournant dans la détection : après son analyse, seule la première h
 Et sans doute allons-nous modifier aussi le dispositif suivant son idée : un micro sur le devant de la ruche et un micro d'ambiance,
 afin de supprimer les faux positifs dus à l'environnement (mobylette et autres..) et donc raccourcir le temps de détection.
 
-Dernière nouvelle : un canon a été experimenté avec succés par Ptitlab et son ami bbruno: 
+Dernière nouvelle : un canon a été experimenté avec succés par Ptitlab et son ami bbruno:
  depuis 2017 ils tirent le frelon :  https://drive.google.com/file/d/16ssjIsU98TqoQO_uRPv50JdfcAjg1aXl/view?usp=sharing
- plus de renseignements sur : http://ruchewarre.net/viewtopic.php?f=175&t=10218 
+ plus de renseignements sur : http://ruchewarre.net/viewtopic.php?f=175&t=10218
 Nous attendons beaucoup de cette collaboration.
 
-Si vous avez des idées pour tuer les frelons asiatiques, merci de nous en faire part 
+Si vous avez des idées pour tuer les frelons asiatiques, merci de nous en faire part
 
 Merci à tous
+
+# Documentation
+
+## Composants
+
+[Liste des composants](documentation/Composants.md)
+
+
+## Essais laser
+[Essais laser](documentation/Laser.md)
+
+## Quelques images capturées
+
+### Frelons
+![capture_44](capture_44.jpg?raw=true "capture_44")
+![capture_96_F](capture_96_F.JPG?raw=true "capture_96_F")
+![capture_96_F](capture_96_F.JPG?raw=true "capture_96_F")
+
+
+### Frelon ?
+![capture_16](capture_16.jpg?raw=true "capture_16")
+![capture_211-Copie_gris.jpg](capture_211-Copie_gris.jpg?raw=true "capture_211-Copie_gris.jpg")
+
+
+
+
+## Enregistrements audio
+
+[bruit_rue+frelon_1](Son-2019-08-16-09-39_bruit_rue+frelon_1.wav)
+
+
+
+[bruit_rue+frelon_2](Son-2019-08-16-09-39_bruit_rue+frelon_2.wav)
