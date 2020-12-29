@@ -17,7 +17,7 @@ Description du produit :
 - Mise au point Laser réglable
 - Taille: 33*33*75mm
 
-Possible de brûler du bois à près de 80cm en ajustant la "focale" (pas sûr du terme)
+Possible de brûler du bois à près de 80cm en ajustant la "focale" (pas sûr du terne)
 
 Toutefois pas d'instantaéité, il faut laisser le faisceau quelques secondes pour brûler.
 
