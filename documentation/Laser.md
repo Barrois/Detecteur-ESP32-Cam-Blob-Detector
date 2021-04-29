@@ -31,6 +31,7 @@ celle-ci s'est envolée à peine en contact avec le faisceau.
 - Pas de projectile à recharger/débloquer
 
 ## Contre
+- Illégalité: https://www.ecologie.gouv.fr/lutte-contre-lusage-des-lasers-dans-transport-aerien
 
 - risque d'incendie
 
