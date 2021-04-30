@@ -6,9 +6,7 @@ regarding copyright ownership.  The ASF licenses this file
 to you under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance
 with the License.  You may obtain a copy of the License at
-
   http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing,
 software distributed under the License is distributed on an
 "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -70,12 +68,14 @@ void loop(){
         // soupçon de frelon => on garde la trace de la FFT
         // enregistrement de la FFT
         // mise en tableau des 5 parties réelles vecteurs de la FFT
+            Serial.print(" pic :  ");
+            Serial.println(pic1);
         for (int i = 2; i < bb; i++) { // i = 2 pour éliminer les basses fréquences < 78 Hz
             traceur [Nb_chrono*bb+i] = vReal1 [i];
             Serial.print(traceur [i]);
             Serial.print("  ");
         }
-
+            Serial.println("  ");
         // est-ce que il y a  5 pics en 235 en moins de 30 secondes ?
         chrono2 = millis(); // demarrage du chrono 2
         if (Nb_chrono == 0) {
@@ -104,7 +104,3 @@ void loop(){
         }
     }   // fin des tests
 }   // fin de LOOP
-
-
-
-
