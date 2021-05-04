@@ -3,6 +3,8 @@
 
 ## Découpe des tâches à effectuer
 
+- [x] [Détection acoustique du vol du frelon asiatique](./sketchbook/ESP_CAM_Audio_Detection): Vespa Velutina Nigrithorax (ESP32-Cam).
+
 - [x] Détection et prise de photo du frelon asiatique en vol stationnaire en moins d'une seconde (ESP32-Cam).
 
 - [x] Localisation d'un Blob dans une photo JPEG/jpg en 180ms pour une résolution 320x240 pixels (ESP32-Cam).
@@ -19,7 +21,7 @@
 
 - [x] Écoute du capteur d'obstacle laser (Arduino 3.3V)
 
-- [x] Actionnement d'une électrovanne via relais
+- [x] Actionnement d'une électrovanne via relais (Arduino 3.3V)
 
 - [ ] Assembler les sections correspondantes dans un programme pour l'ESP32-Cam
 
