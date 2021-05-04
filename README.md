@@ -25,7 +25,7 @@
 
 - [ ] Assembler les sections correspondantes dans un programme pour l'ESP32-Cam
 
-- [ ] Assembler les sections correspondantes dans un programme stable l'Arduino
+- [ ] Assembler les sections correspondantes dans un programme pour l'Arduino
 
 - [ ] Tester en conditions réelles
 
@@ -127,7 +127,7 @@ Merci à tous
 
 [Liste des composants](documentation/Composants.md)
 
-## Schema des connections ESP32-Cam
+## Schema des connexions ESP32-Cam
 
 ![SP32-CAM-pinout-schema](documentation/ESP32-CAM-pinout-schema.png "SP32-CAM-pinout-schema")
 
