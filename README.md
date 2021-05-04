@@ -90,9 +90,6 @@ La logique actuellement est la suivante :
 - quand on allume l'esp32-cam
   1. il lit l'EEProm pour savoir à quel numéro de fichier il en est : xxx
   2. il fait une localisation qu'il sauvegarde sur la carte SD : fichier LOCAxxx.txt
-
- Reste à faire : transmettre l'information au Pan-Tilt
-
   3. il fait une photo sauvegardée sur la carte SD : fichier CAPTURExxx.jpg
   4. il se met en position d'écoute sur le port 0
   5. il fait la FFT
