@@ -453,7 +453,7 @@ $EndComp
 Wire Wire Line
 	5750 4650 5500 4650
 Wire Wire Line
-	5500 4650 5500 4900
+	5500 4650 5500 4800
 Wire Wire Line
 	5500 5300 6350 5300
 Connection ~ 6350 5300
@@ -488,4 +488,82 @@ Wire Wire Line
 Connection ~ 5500 4900
 Wire Wire Line
 	5500 4900 5500 5000
+$Comp
+L Transistor_FET:BS170 Q?
+U 1 1 60A128C2
+P 8850 4600
+F 0 "Q?" H 9054 4646 50  0000 L CNN
+F 1 "BS170" H 9054 4555 50  0000 L CNN
+F 2 "Package_TO_SOT_THT:TO-92_Inline" H 9050 4525 50  0001 L CIN
+F 3 "http://www.fairchildsemi.com/ds/BS/BS170.pdf" H 8850 4600 50  0001 L CNN
+	1    8850 4600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 60A2BDA1
+P 8200 6050
+F 0 "#PWR?" H 8200 5800 50  0001 C CNN
+F 1 "GND" H 8205 5877 50  0000 C CNN
+F 2 "" H 8200 6050 50  0001 C CNN
+F 3 "" H 8200 6050 50  0001 C CNN
+	1    8200 6050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8650 4600 8200 4600
+Wire Wire Line
+	8200 4600 8200 6050
+$Comp
+L Device:R_US R?
+U 1 1 60A2E9D2
+P 8950 3900
+F 0 "R?" H 9018 3946 50  0000 L CNN
+F 1 "10k" H 9018 3855 50  0000 L CNN
+F 2 "" V 8990 3890 50  0001 C CNN
+F 3 "~" H 8950 3900 50  0001 C CNN
+	1    8950 3900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8950 4050 8950 4400
+$Comp
+L Diode:1N4148 D?
+U 1 1 60A30323
+P 8350 3650
+F 0 "D?" H 8350 3867 50  0000 C CNN
+F 1 "1N4148" H 8350 3776 50  0000 C CNN
+F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 8350 3475 50  0001 C CNN
+F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 8350 3650 50  0001 C CNN
+	1    8350 3650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8950 3750 8950 3650
+Wire Wire Line
+	8950 3650 8500 3650
+Wire Wire Line
+	8200 3650 8050 3650
+Wire Wire Line
+	8050 3650 8050 4800
+Wire Wire Line
+	8050 4800 5500 4800
+Connection ~ 5500 4800
+Wire Wire Line
+	5500 4800 5500 4900
+$Comp
+L Connector:Conn_01x01_Male J?
+U 1 1 60A33D86
+P 9800 5100
+F 0 "J?" H 9772 5032 50  0000 R CNN
+F 1 "Reset ESP" H 9772 5123 50  0000 R CNN
+F 2 "" H 9800 5100 50  0001 C CNN
+F 3 "~" H 9800 5100 50  0001 C CNN
+	1    9800 5100
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	8950 4800 8950 5100
+Wire Wire Line
+	8950 5100 9600 5100
 $EndSCHEMATC
