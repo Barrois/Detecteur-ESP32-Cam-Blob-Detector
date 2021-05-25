@@ -1,0 +1,40 @@
+Initialisation et correspondance entre Photo et Angles de tir
+
+Pour l'initialisation, il faut pouvoir faire une photo de la zone supposée de présence du frelon asiatique, et déterminer sur cette photo initiale, la zone de recherche.
+Cela demande l'envoi vers l'extérieur via RxTX ou webserver, du fichier txt de l'ensemble des points de la photo dans sa résolution minimale en nuances de gris.
+Ensuite pour faciliter la tâche, le mieux que j'ai trouvé, c'est de mettre ce fichier dans Excel et de colorer les cases en fonction de leur nuance de gris.
+Alors la photo apparaît en réduisant l'échelle du tableau.
+On repère donc le coin supérieur, la longueur d'une ligne et la hauteur de la photo.
+Il faut ensuite convertir les coordonnées du coin supérieur en nombre de pixels en ligne (ligne à ligne à la suite), ainsi que le nombre de pixels de la zone, et le décalage jusqu'au point en dessous du coin et le nombre d'itérations pour couvrir la zone.
+
+C'est pas simple à expliquer mais c'est comme ça que je fais
+Après on cherche le point le plus noir dans la zone et on reconverti sa position en coordonnées et en angles pour le Pan tilt
+
+Il y a aussi une méthode expérimentale avec joystick...
+Et enfin on peut à priori fixer la distance de tir et les bornes donc ne pas faire d'initialisation.
+
+Evidemment, je serai preneur d'une solution plus simple
+pour déterminer les bornes de fenêtrage insérer dans le programme :
+// bornes de fenêtrage
+  int by1 = 22; //    9; 80/32*9
+  int by2 = 47; //   19;
+  int bx1 = 45; //   15;
+  int bx2 = 60; //   20;
+  int noir = 255;
+  int ix_noir, iy_noir , ind_noir;
+  int ind2;
+Elles sont données ici en pixel dans la photo en résolution 80x60
+Après on cherche le point le plus noir dans la fenêtre : ( y , x )
+et il faut transformer le ( y , x ) en angle pour le Pan-Tilt : (modifié) 
+  
+  int angle_pan_1 =4;        // position des bords
+  int angle_pan_2 =36;
+  int angle_til_1 =46;
+  int angle_til_2 =78; (modifié) 
+ou en prenant le point central = yc , xc = 25,30 => pan, tilt = 21,61
+et le décalage suivant les axes :  y = - 32/52 +   x = + 32/52 pour la photo en  80x60
+  Alors l'ordre pour le Pan-Tilt est donné par :
+  angle_pan = angle_pan_0 - (32/52)* iy_noir ;  //21 - 35.7 =-14.7
+  angle_til = angle_til_0 - (32/52)* ix_noir ;  //61 - 25.8 =35.2 (modifié) 
+ 
+Et il n'y a plus qu'à enclencher le tir en automatique (modifié) 
