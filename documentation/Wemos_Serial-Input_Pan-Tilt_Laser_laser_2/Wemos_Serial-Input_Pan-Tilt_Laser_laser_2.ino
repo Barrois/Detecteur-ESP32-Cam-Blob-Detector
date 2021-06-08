@@ -117,28 +117,8 @@ void loop() {
 
       if (integerCommand == moveServo) {
         Serial.println("Deplacement du servo !");
-
-        Serial.print("     on tire en angle X : " );
-        Serial.print(59);
-        Serial.print(", et angle Y :" );
-        Serial.println(4);
-        pwm.setPWM(PAN_ID, 0, angleToPulse(59) );
-        pwm.setPWM(TILT_ID, 0, angleToPulse(4) );
-        delay(500);
-        // on allume le laser
-        digitalWrite(D5, HIGH);
-        digitalWrite(LED_BUILTIN, HIGH);
-        Serial.println("...................on allume le laser" );
-
-        delay(2000);
-
-        // on éteint le laser
-        digitalWrite(D5, LOW );
-        digitalWrite(LED_BUILTIN, LOW);
-        Serial.println("...................on eteint le laser" );
-
-        // on se positionne au milieu de la cible
-        Serial.print("     Milieu  : angle X : " );
+        // on tire sur la cible 
+        Serial.print("     On tire sur la cible  : angle X : " );
         Serial.print(integerAngleX);
         Serial.print(", angle Y :" );
         Serial.println(integerAngleY);
@@ -149,13 +129,29 @@ void loop() {
         digitalWrite(D5, HIGH);
         digitalWrite(LED_BUILTIN, HIGH);
         Serial.println("...................on allume le laser" );
-        delay(500);
+        delay(2000);  // temps pour le tir
         // on éteint le laser
         digitalWrite(D5, LOW );
         digitalWrite(LED_BUILTIN, LOW);
         Serial.println("...................on eteint le laser" );
 
-
+        //  on se positionne au milieu de la cible pur la photo suivante 
+        Serial.print("     on tire au Milieu de la cible : " );
+        Serial.print(59);
+        Serial.print(", et :" );
+        Serial.println(4);
+        pwm.setPWM(PAN_ID, 0, angleToPulse(59) );
+        pwm.setPWM(TILT_ID, 0, angleToPulse(4) );
+        delay(500);
+        // on allume le laser  
+        digitalWrite(D5, HIGH);
+        digitalWrite(LED_BUILTIN, HIGH);
+        Serial.println("...................on allume le laser" );
+        delay(2000);   // temps pour la photo
+        // on éteint le laser
+        digitalWrite(D5, LOW );
+        digitalWrite(LED_BUILTIN, LOW);
+        Serial.println("...................on eteint le laser" );
       }
 
       Serial.println();
