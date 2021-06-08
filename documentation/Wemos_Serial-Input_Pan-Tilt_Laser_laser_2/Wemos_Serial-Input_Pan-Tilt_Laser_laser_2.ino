@@ -135,7 +135,7 @@ void loop() {
         digitalWrite(LED_BUILTIN, LOW);
         Serial.println("...................on eteint le laser" );
 
-        //  on se positionne au milieu de la cible pur la photo suivante 
+        //  on se positionne au milieu de la cible pour la photo suivante 
         Serial.print("     on tire au Milieu de la cible : " );
         Serial.print(59);
         Serial.print(", et :" );
