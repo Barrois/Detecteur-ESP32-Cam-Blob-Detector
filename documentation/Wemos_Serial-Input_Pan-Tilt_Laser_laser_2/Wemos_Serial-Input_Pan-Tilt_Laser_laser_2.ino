@@ -1,17 +1,17 @@
-// 
+//
 // fonctionne sur un D1 mini pro
 //
 /**
 * Envoi de deux coordonnées sous la forme: 1,100,50
 * suivi d'une validation par la touche Entrée
-* 
-* la première valeur 1 sera utilisé pour indiquer la 
+*
+* la première valeur 1 sera utilisé pour indiquer la
 * commande à effectuer, si == moveServo alors ce sera
 * un déplacement des servos
-* 
+*
 * les valeurs de 100 et de 50 seront converties en int
 * pour pouvoir être utilisées pour orienter les servos
-* 
+*
 */
 
 String readString; // récupération de la chaîne: String
@@ -24,7 +24,7 @@ const int moveServo = 1; // id commande de servo
 
 // Utilisé pour indiquer la commande à effectuer
 int integerCommand = 0;
-// Utilisées pour la conversion 
+// Utilisées pour la conversion
 int integerAngleX = 59; // le milieu du champ
 int integerAngleY = 4;  // le milieu du champ
 
@@ -38,7 +38,7 @@ int ind2;
 #include <Adafruit_PWMServoDriver.h>
 
 const int PAN_ID = 0;   // Pan  (en bas)     sur le port 0 du PCA9685
-const int TILT_ID = 1;  // Tilt (au dessus)  sur le port 1 du PCA9685 
+const int TILT_ID = 1;  // Tilt (au dessus)  sur le port 1 du PCA9685
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 #define SERVOMIN  150 // this is the 'minimum' pulse length count (out of 4096)
@@ -46,39 +46,39 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
 void setup() {
     Serial.begin(9600);
-    Serial.println(__FILE__);    
-    pinMode(D5, OUTPUT);      // commande du viseur en sortie    
-      pinMode(LED_BUILTIN, OUTPUT);       
+    Serial.println(__FILE__);
+    pinMode(D5, OUTPUT);      // commande du viseur en sortie
+      pinMode(LED_BUILTIN, OUTPUT);
    Serial.println("............ Servo test!");
    //Wire.begin(PIN_SDA, PIN_SCL);
-   Wire.begin();   
+   Wire.begin();
    pwm.begin();
-   pwm.setPWMFreq(60); 
+   pwm.setPWMFreq(60);
 
         // on se positionne au milieu de la cible
     Serial.print("     Milieu  : angle X : " );
     Serial.print(integerAngleX);
-    Serial.print(", angle Y :" );   
-    Serial.println(integerAngleY);   
-    delay(100);         
+    Serial.print(", angle Y :" );
+    Serial.println(integerAngleY);
+    delay(100);
     pwm.setPWM(PAN_ID, 0, angleToPulse(integerAngleX) );
     pwm.setPWM(TILT_ID, 0, angleToPulse(integerAngleY) );
-    delay(100); 
+    delay(100);
       // on allume le laser pour voir
            digitalWrite(D5, HIGH);
-           digitalWrite(LED_BUILTIN, HIGH);    
-           Serial.println("...................on allume le laser" );    
-      delay(500);            
+           digitalWrite(LED_BUILTIN, HIGH);
+           Serial.println("...................on allume le laser" );
+      delay(500);
      // on éteint le laser
            digitalWrite(D5, LOW );
-           digitalWrite(LED_BUILTIN, LOW);           
-           Serial.println("...................on eteint le laser" ); 
-        
+           digitalWrite(LED_BUILTIN, LOW);
+           Serial.println("...................on eteint le laser" );
+
 }
 void loop() {
-  
 
-  // on écoute l'Esp32-Cam  
+
+  // on écoute l'Esp32-Cam
   //    Serial.println(" on ecoute Esp32-Cam ");
 
  if (Serial.available())  {
@@ -90,10 +90,10 @@ void loop() {
       Serial.print("captured String is : ");
       Serial.println(readString); //prints string to serial port out
 
-    
+
       ind1 = readString.indexOf(',');  //finds location of first ,
       ind2 = readString.indexOf(',', ind1+1 );   //finds location of second ,
-      
+
       command = readString.substring(0, ind1);//captures first data String
       angleX = readString.substring(ind1+1,ind2);
       angleY = readString.substring(ind2+1);
@@ -117,6 +117,45 @@ void loop() {
 
       if (integerCommand == moveServo) {
         Serial.println("Deplacement du servo !");
+
+        Serial.print("     on tire en angle X : " );
+        Serial.print(59);
+        Serial.print(", et angle Y :" );
+        Serial.println(4);
+        pwm.setPWM(PAN_ID, 0, angleToPulse(59) );
+        pwm.setPWM(TILT_ID, 0, angleToPulse(4) );
+        delay(500);
+        // on allume le laser
+        digitalWrite(D5, HIGH);
+        digitalWrite(LED_BUILTIN, HIGH);
+        Serial.println("...................on allume le laser" );
+
+        delay(2000);
+
+        // on éteint le laser
+        digitalWrite(D5, LOW );
+        digitalWrite(LED_BUILTIN, LOW);
+        Serial.println("...................on eteint le laser" );
+
+        // on se positionne au milieu de la cible
+        Serial.print("     Milieu  : angle X : " );
+        Serial.print(integerAngleX);
+        Serial.print(", angle Y :" );
+        Serial.println(integerAngleY);
+        pwm.setPWM(PAN_ID, 0, angleToPulse(integerAngleX) );
+        pwm.setPWM(TILT_ID, 0, angleToPulse(integerAngleY) );
+        delay(500);
+        // on allume le laser pour voir
+        digitalWrite(D5, HIGH);
+        digitalWrite(LED_BUILTIN, HIGH);
+        Serial.println("...................on allume le laser" );
+        delay(500);
+        // on éteint le laser
+        digitalWrite(D5, LOW );
+        digitalWrite(LED_BUILTIN, LOW);
+        Serial.println("...................on eteint le laser" );
+
+
       }
 
       Serial.println();
@@ -131,54 +170,16 @@ void loop() {
       readString += c; //makes the string readString
     }
  }
-    if ( integerCommand == 1) { 
-    Serial.print("     on tire en angle X : " );  
-    Serial.print(59);
-    Serial.print(", et angle Y :" );   
-    Serial.println(4);       
-    pwm.setPWM(PAN_ID, 0, angleToPulse(59) );
-    pwm.setPWM(TILT_ID, 0, angleToPulse(4) );
-    delay(500);   
-    // on allume le laser 
-           digitalWrite(D5, HIGH);
-           digitalWrite(LED_BUILTIN, HIGH);    
-           Serial.println("...................on allume le laser" );
-    
-      delay(2000);  
-          
-     // on éteint le laser
-           digitalWrite(D5, LOW );
-           digitalWrite(LED_BUILTIN, LOW);           
-           Serial.println("...................on eteint le laser" ); 
 
-// on se positionne au milieu de la cible
-    Serial.print("     Milieu  : angle X : " );
-    Serial.print(integerAngleX);
-    Serial.print(", angle Y :" );   
-    Serial.println(integerAngleY);   
-    pwm.setPWM(PAN_ID, 0, angleToPulse(integerAngleX) );
-    pwm.setPWM(TILT_ID, 0, angleToPulse(integerAngleY) );
-    delay(500); 
-      // on allume le laser pour voir
-           digitalWrite(D5, HIGH);
-           digitalWrite(LED_BUILTIN, HIGH);    
-           Serial.println("...................on allume le laser" );    
-      delay(500);            
-     // on éteint le laser
-           digitalWrite(D5, LOW );
-           digitalWrite(LED_BUILTIN, LOW);           
-           Serial.println("...................on eteint le laser" ); 
-                   
-      }
-       
+
      /*
-// pour test 
-     // on allume le laser 
+// pour test
+     // on allume le laser
            digitalWrite(D5, HIGH);
-           digitalWrite(LED_BUILTIN, HIGH);    
-    Serial.println("...................on allume le laser" ); 
+           digitalWrite(LED_BUILTIN, HIGH);
+    Serial.println("...................on allume le laser" );
  //    Milieu  : angle X : 59, angle Y :4
-    
+
    int a = 10; // delta horizontal
    int b = 10; // delta vertical
    int c = 1000;// duréee de pause au coin
@@ -188,68 +189,68 @@ void loop() {
 
     Serial.print("     Milieu  : angle X : " );
     int integerAngleX = d;
-    int integerAngleY = e;    
+    int integerAngleY = e;
     Serial.print(integerAngleX);
-    Serial.print(", angle Y :" );   
-    Serial.println(integerAngleY);       
+    Serial.print(", angle Y :" );
+    Serial.println(integerAngleY);
     pwm.setPWM(PAN_ID, 0, angleToPulse(integerAngleX) );
     pwm.setPWM(TILT_ID, 0, angleToPulse(integerAngleY) );
-    delay(c);   
-    
+    delay(c);
+
    //  coin en haut gauche
     integerAngleX = d+a; // H  59 + 10 = 69
     integerAngleY = e+b; // V  4 +10  = 14
     Serial.print("      coin en haut gauche   " );
     Serial.println(integerAngleX);
     pwm.setPWM(PAN_ID, 0, angleToPulse(integerAngleX) );
-    pwm.setPWM(TILT_ID, 0, angleToPulse(integerAngleY) );    
+    pwm.setPWM(TILT_ID, 0, angleToPulse(integerAngleY) );
     delay(c);
 
     integerAngleX = d-a;
-    integerAngleY = e+b;    
+    integerAngleY = e+b;
     Serial.print("      coin en haut  droit " );
     Serial.println(integerAngleX);
     pwm.setPWM(PAN_ID, 0, angleToPulse(integerAngleX) );
-    pwm.setPWM(TILT_ID, 0, angleToPulse(integerAngleY) );    
+    pwm.setPWM(TILT_ID, 0, angleToPulse(integerAngleY) );
     delay(c);
-    
+
     integerAngleX = d-a;
-    integerAngleY = e-b;    
+    integerAngleY = e-b;
     Serial.print("      coin en bas  droit  " );
     Serial.println(integerAngleX);
     pwm.setPWM(PAN_ID, 0, angleToPulse(integerAngleX) );
-    pwm.setPWM(TILT_ID, 0, angleToPulse(integerAngleY) );    
+    pwm.setPWM(TILT_ID, 0, angleToPulse(integerAngleY) );
     delay(c);
 
     integerAngleX = d+a;
-    integerAngleY = e-b;    
+    integerAngleY = e-b;
     Serial.print("      coin en bas  gauche  " );
     Serial.println(integerAngleX);
     pwm.setPWM(PAN_ID, 0, angleToPulse(integerAngleX) );
-    pwm.setPWM(TILT_ID, 0, angleToPulse(integerAngleY) );    
+    pwm.setPWM(TILT_ID, 0, angleToPulse(integerAngleY) );
     delay(c);
 
     delay(200);
-           digitalWrite(LED_BUILTIN, LOW);    
+           digitalWrite(LED_BUILTIN, LOW);
 
 delay(2000);
         // on éteint le laser
            digitalWrite(D5, LOW );
-           digitalWrite(LED_BUILTIN, HIGH);    
-       Serial.println("...................on eteint le laser" );      
+           digitalWrite(LED_BUILTIN, HIGH);
+       Serial.println("...................on eteint le laser" );
         delay(200);
         digitalWrite(LED_BUILTIN, LOW);
-    
+
     // on éteint le laser
            digitalWrite(D5, LOW );
-           digitalWrite(LED_BUILTIN, HIGH);    
-       Serial.println("...................on eteint le laser" );      
+           digitalWrite(LED_BUILTIN, HIGH);
+       Serial.println("...................on eteint le laser" );
         delay(200);
         digitalWrite(LED_BUILTIN, LOW);
 */
  }
 int angleToPulse(int ang){
-   int pulse = map(ang,00, 180, SERVOMIN,SERVOMAX);// map angle of 0 to 180 to Servo min and Servo max 
+   int pulse = map(ang,00, 180, SERVOMIN,SERVOMAX);// map angle of 0 to 180 to Servo min and Servo max
    Serial.print("Angle: ");Serial.print(ang);
    Serial.print(" pulse: ");Serial.println(pulse);
    return pulse;
