@@ -18,18 +18,18 @@ under the License.
 la logique prévue :
 - quand on allume l'esp32-cam
    -0 il lit l'EEProm pour savoir à quel numéro de fichier il en est : xxx
-   -1 il fait une localisation qu'il sauvegarde sur la carte SD : fichier LOCAxxx.txt 
+   -1 il fait une localisation qu'il sauvegarde sur la carte SD : fichier LOCAxxx.txt
    -2 il fait une photo sauvegarder sur la carte SD : fichier CAPTURExxx.jpg
-   -3 il se mets en position d'écoute sur le port 0 
-   -4 il fait la FFT 
-   -5 si la filtre de la FFT est positif, il commence à compter 
-   -6 si le compteur du filtre atteint 5 reconnaissances en moins d'une seconde 
+   -3 il se mets en position d'écoute sur le port 0
+   -4 il fait la FFT
+   -5 si la filtre de la FFT est positif, il commence à compter
+   -6 si le compteur du filtre atteint 5 reconnaissances en moins d'une seconde
         il collecte les 5 FFT qui ont déclenchées l'alarme et les stocke sur la carte SD : fichier FFTxxx.txt
-        puis l'esp32-cam redémarre pour faire la localisation et la photo 
+        puis l'esp32-cam redémarre pour faire la localisation et la photo
    -7 il fait la localisation du blob sur une photo faite en 320x240 et dégradé en 80x60
-   -8 il envoie les coordonnées au PCA9685 qui gère le Pan-Tilt 
-       sur les GPIO 26 SDA et GPIO 27 SCL        
-   -1-7 sinon il recommence en -4 
+   -8 il envoie les coordonnées au PCA9685 qui gère le Pan-Tilt
+       sur les GPIO 26 SDA et GPIO 27 SCL
+   -1-7 sinon il recommence en -4
  */
 #define CAMERA_MODEL_AI_THINKER
 
@@ -77,7 +77,7 @@ arduinoFFT FFT = arduinoFFT();
 unsigned int sampling_period_us;
 double vReal1[SAMPLES];
 double vImag1[SAMPLES];
-int bb =55; // nb de frequence qu'on garde 
+int bb =55; // nb de frequence qu'on garde
 double traceur [275]={0}; // pour sauver les 5 FFT de 55 nombres
 double local [10]={0}; // pour sauver les 10 localisations
 
@@ -150,109 +150,113 @@ void setup() {
 
 void loop() {
 
-      //
-      //   prise de son et création de sa FFT
-      //
+    //
+    //   prise de son et création de sa FFT
+    //
     for (int i = 0; i < SAMPLES; i++) {
-    newTime  = micros();         //  lecture du son via un micro mis en GPIO0
-    vReal1[i] = analogRead(0);   //  Using pin number for ADC port ici GPIO0
-    vImag1[i] = 0;
-    while ((micros() - newTime) < sampling_period_us) { /* do nothing to wait */ }
-  }
-  FFT.Windowing(vReal1, SAMPLES, FFT_WIN_TYP_HAMMING, FFT_FORWARD);
-  FFT.Compute(vReal1, vImag1, SAMPLES, FFT_FORWARD);
-  FFT.ComplexToMagnitude(vReal1, vImag1, SAMPLES);
-  // calcul du pic   
-  double pic1 = FFT.MajorPeak(vReal1, SAMPLES, SAMPLING_FREQUENCY); 
-//
-// début des tests de frelons asiatiques
-// 
-
-pic1 = 220;  // pour test
-
-
-       // on cherche si le pic = 234 +- 10%
-      if (pic1 >210  && pic1 <=260) {   
-  
-        // soupçon de frelon => on garde la trace de la FFT
-          // enregistrement de la FFT 
-             Serial.print("debut du vecteur FFT : ");
-             Serial.println(Nb_chrono);
-          // mise en tableau des 5 parties réelles vecteurs de la FFT
-           for (int i = 2; i < bb; i++) { // i = 2 pour éliminer les basses fréquences < 78 Hz
-            traceur [Nb_chrono*bb+i] = vReal1 [i];  
-            Serial.print(traceur [i]);
-            Serial.print("  ");
-                 }        
-            Serial.println("fin du vecteur FFT");
-        //    Serial.println("Computed magnitudes: apres _1 ");
-        //    PrintVector(traceur, bb, SCL_FREQUENCY);
-  Serial.print("0_Nb_chrono : ");
-  Serial.print (Nb_chrono);
-  Serial.print(" chrono1 : ");
-  Serial.print (chrono1);  
-  Serial.print(" chrono2 : ");
-  Serial.println(chrono2);            
-    // est-ce que il y a  5 pics en 235 en moins de 30 secondes ? 
-        chrono2 = millis(); // demarrage du chrono 2  
-       if (Nb_chrono == 0) {
-       chrono1 = chrono2 ;  // remise à l'heure du compteur 1 
-       }     
-       unsigned long interval;     
-       interval = chrono2 - chrono1 ;
-  Serial.print("1_Nb_chrono : ");
-  Serial.print (Nb_chrono);
-  Serial.print(" chrono1 : ");
-  Serial.print (chrono1);
-  Serial.print(" interval : ");
-  Serial.print (interval);  
-  Serial.print(" chrono2 : ");
-  Serial.println(chrono2);
-     if (interval < 5000 ) {     // les deux pics sont séparés de moins de 5s
-                            chrono1 = chrono2;
-                            chrono2 = millis();
-                            Nb_chrono++;
-                            delay(100); // attente 
-                            }
-                     else { Nb_chrono = 0;}   // remise à zero du compteur
-  Serial.print("2_Nb_chrono : ");
-  Serial.print (Nb_chrono);
-  Serial.print(" chrono1 : ");
-  Serial.print (chrono1);
-  Serial.print(" interval : ");
-  Serial.print (interval);  
-  Serial.print(" chrono2 : ");
-  Serial.println(chrono2);                       
-    if ( Nb_chrono > 4 ) {     // !!!! FRELON !!!!          
-         Nb_chrono=0;       
-    // affichage alerte  FRELON !     
-      Serial.println("  A L E R T E ");
-      Serial.println(" F R E L O N S");
-      Serial.println("   /-------!  ");      
-      Serial.println("   !  o-o  !  ");
-      Serial.println("   !  (!)  ! ");
-      Serial.println("   !___!___/  ");
- 
-    //  save_FFT_numbered(); // si on veut sauvegarder les 5 FFT
-      //
-      //  fin de la prise de son et création de sa FFT
-      //
+      newTime  = micros();         //  lecture du son via un micro mis en GPIO0
+      vReal1[i] = analogRead(0);   //  Using pin number for ADC port ici GPIO0
+      vImag1[i] = 0;
+      while ((micros() - newTime) < sampling_period_us) { /* do nothing to wait */ }
     }
-    } // fin des tests son 
-  pwm.setPWM(PAN_ID,  0, angleToPulse(angle_pan_1));
-  pwm.setPWM(TILT_ID, 0, angleToPulse(angle_til_1));
-  capture();
- //Path where new picture will be saved in SD Card
-  path = "/picture" + String(pictureNumber) +".jpg";
-  Serial.printf("Picture file name: %s\n", path.c_str());
-  //Take and Save Photo
-  takeSavePhoto(path);
-  pictureNumber++;
-  delay(100);
+    FFT.Windowing(vReal1, SAMPLES, FFT_WIN_TYP_HAMMING, FFT_FORWARD);
+    FFT.Compute(vReal1, vImag1, SAMPLES, FFT_FORWARD);
+    FFT.ComplexToMagnitude(vReal1, vImag1, SAMPLES);
+
+    // calcul du pic
+    double pic1 = FFT.MajorPeak(vReal1, SAMPLES, SAMPLING_FREQUENCY);
+
+    //
+    // début des tests de frelons asiatiques
+    //
+
+    pic1 = 220;  // pour test
+
+    // on cherche si le pic = 234 +- 10%
+    if (pic1 >210  && pic1 <=260) {
+      // soupçon de frelon => on garde la trace de la FFT
+      // enregistrement de la FFT
+      Serial.print("debut du vecteur FFT : ");
+      Serial.println(Nb_chrono);
+
+      // mise en tableau des 5 parties réelles vecteurs de la FFT
+      for (int i = 2; i < bb; i++) { // i = 2 pour éliminer les basses fréquences < 78 Hz
+        traceur [Nb_chrono*bb+i] = vReal1 [i];
+        Serial.print(traceur [i]);
+        Serial.print("  ");
+      }
+      Serial.println("fin du vecteur FFT");
+      //    Serial.println("Computed magnitudes: apres _1 ");
+      //    PrintVector(traceur, bb, SCL_FREQUENCY);
+      Serial.print("0_Nb_chrono : ");
+      Serial.print (Nb_chrono);
+      Serial.print(" chrono1 : ");
+      Serial.print (chrono1);
+      Serial.print(" chrono2 : ");
+      Serial.println(chrono2);
+
+      // est-ce que il y a  5 pics en 235 en moins de 30 secondes ?
+      chrono2 = millis(); // demarrage du chrono 2
+       if (Nb_chrono == 0) {
+        chrono1 = chrono2 ;  // remise à l'heure du compteur 1
+       }
+      unsigned long interval;
+      interval = chrono2 - chrono1;
+      Serial.print("1_Nb_chrono : ");
+      Serial.print (Nb_chrono);
+      Serial.print(" chrono1 : ");
+      Serial.print (chrono1);
+      Serial.print(" interval : ");
+      Serial.print (interval);
+      Serial.print(" chrono2 : ");
+      Serial.println(chrono2);
+      if (interval < 5000 ) {     // les deux pics sont séparés de moins de 5s
+        chrono1 = chrono2;
+        chrono2 = millis();
+        Nb_chrono++;
+        delay(100); // attente
+      } else {
+        Nb_chrono = 0; // remise à zero du compteur
+      }
+      Serial.print("2_Nb_chrono : ");
+      Serial.print (Nb_chrono);
+      Serial.print(" chrono1 : ");
+      Serial.print (chrono1);
+      Serial.print(" interval : ");
+      Serial.print (interval);
+      Serial.print(" chrono2 : ");
+      Serial.println(chrono2);
+      if ( Nb_chrono > 4 ) {     // !!!! FRELON !!!!
+         Nb_chrono=0;
+        // affichage alerte  FRELON !
+        Serial.println("  A L E R T E ");
+        Serial.println(" F R E L O N S");
+        Serial.println("   /-------!  ");
+        Serial.println("   !  o-o  !  ");
+        Serial.println("   !  (!)  ! ");
+        Serial.println("   !___!___/  ");
+
+        //  save_FFT_numbered(); // si on veut sauvegarder les 5 FFT
+        //
+        //  fin de la prise de son et création de sa FFT
+        //
+      }
+    } // fin des tests son
+    pwm.setPWM(PAN_ID,  0, angleToPulse(angle_pan_1));
+    pwm.setPWM(TILT_ID, 0, angleToPulse(angle_til_1));
+    capture();
+
+    //Path where new picture will be saved in SD Card
+    path = "/picture" + String(pictureNumber) +".jpg";
+    Serial.printf("Picture file name: %s\n", path.c_str());
+    //Take and Save Photo
+    takeSavePhoto(path);
+    pictureNumber++;
+    delay(100);
 
  // while(1);
 }
-      
+
  void capture() {
   timeit("capture frame", frame = camera.capture());
   // scale image from size H * W to size h * w
