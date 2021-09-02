@@ -24,3 +24,18 @@ Les connecteurs pour l'I2C:
 
 ![schéma SDA et SCL](FPC-24P_0.5mm__deviation_I2C_Camera.jpg?raw=true "schéma SDA et SCL")
 
+
+## Exemple d'utilisation du bus I2C
+
+```
+#include <Wire.h>
+
+const int PIN_SDA = 26;  // port 26 du esp32-cam sur le SDA directement sur la puce
+const int PIN_SCL = 27;  // port 27 du esp32-cam sur le SCL directement sur la puce
+void setup()
+{
+
+  Serial.begin(115200);
+  Wire.begin(PIN_SDA, PIN_SCL);
+}
+```
