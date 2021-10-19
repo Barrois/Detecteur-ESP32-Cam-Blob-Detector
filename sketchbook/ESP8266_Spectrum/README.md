@@ -7,5 +7,5 @@
 
 ## Raccordements
 
-- le micro est relié au seul ADC de l'esp8266, à savoir ADC0
+- le micro est relié au seul ADC de l'esp8266, à savoir ADC0/A0
 - le relais est relié sur la sortie D1
