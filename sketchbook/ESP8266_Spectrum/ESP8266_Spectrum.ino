@@ -23,6 +23,10 @@ unsigned int sampling_period_us;
 double vReal1[SAMPLES];
 double vImag1[SAMPLES];
 
+double pic = 234;
+double picSeuilBas = pic - (10 * pic /100);
+double picSeuilHaut = pic + (10 * pic /100);
+
 // voir l'exemple FFT_01 https://github.com/kosme/arduinoFFT/blob/master/Examples/FFT_01/FFT_01.ino
 unsigned long newTime, chrono1, chrono2;
 int compteur_tour =0;
@@ -58,8 +62,9 @@ void loop(){
   // calcul du pic
   double pic1 = FFT.MajorPeak(vReal1, SAMPLES, SAMPLING_FREQUENCY);
 
+//picSeuilHaut = pic + (10 * seuil /100);
   // on cherche si le pic = 234 +- 10%
-  if (pic1 >210  && pic1 <=260) {         // soupçon de frelon
+  if (pic1 >picSeuilBas  && pic1 <=picSeuilHaut) {         // soupçon de frelon
     // est-ce que il y a  5 pics en 235 en moins de 30 secondes ?
     chrono2 = millis(); // demarrage du chrono 2
     if (Nb_chrono == 0) {
