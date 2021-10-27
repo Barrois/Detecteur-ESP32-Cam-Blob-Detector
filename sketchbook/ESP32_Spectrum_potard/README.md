@@ -34,3 +34,8 @@ Il semblerait toutefois que les harmoniques soient plus facilement détectables.
 Sans avoir vraiment d'explication, la fréquence 460 fonctionne mieux avec l'esp8266 que 230, et 920 pour l'ESP32.
 
 À vérifier en "conditions réelles".
+
+
+En cas de détection la led de la carte est allumée (variable LED_BUILTIN qui doit dépendre du type de carte sélectionnée dans l'IDE Arduino > Outils > Type de carte).
+
+Sur l'ESP32 Lolin32 Lite servant aux essais, la logique est inversée: HIGH éteint la led et LOW l'allume, il faudra peut être inverser la logique sur une autre carte.
