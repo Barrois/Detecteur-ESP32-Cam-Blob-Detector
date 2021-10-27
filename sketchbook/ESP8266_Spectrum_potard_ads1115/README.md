@@ -1,8 +1,8 @@
 # Détecteur acoustique de frelon pour ESP8266
 
-L'objectif est de faire un détecteur bas coût avec la possibilité d'ajuster la détection en fonction du frelon asiatique. 
+L'objectif est de faire un détecteur bas coût avec la possibilité d'ajuster la détection en fonction du frelon asiatique.
 En effet le poids et la taille du frelon asiatique varient avec l'avancée de la saison et l'abondance de la nourriture,
-ce qui entraine des variations du pic de détection qu'il faut pouvoir régler in situ, d'ou cemontage avec un potentiomètre
+ce qui entraine des variations du pic de détection qu'il faut pouvoir régler in situ, d'ou ce montage avec un potentiomètre
 
 ## Pré requis
 
@@ -22,3 +22,7 @@ il ne peut donc être enfiché directement sur les headers de l'ESP8266
 
 
 ![Schema Breadboard](/sketchbook/ESP8266_Spectrum_potard_ads1115/ESP8266_Spectrum_bb.png "Schema Breadboard")
+
+
+Le circuit de test sur breadboard :
+![Circuit sur Breadboard](/sketchbook/ESP8266_Spectrum_potard_ads1115/ESP8266_potentiometre_ads11115_MAX9814.jpg "Circuit sur Breadboard")
