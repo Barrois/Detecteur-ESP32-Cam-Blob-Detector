@@ -39,3 +39,13 @@ Sans avoir vraiment d'explication, la fréquence 460 fonctionne mieux avec l'esp
 En cas de détection la led de la carte est allumée (variable LED_BUILTIN qui doit dépendre du type de carte sélectionnée dans l'IDE Arduino > Outils > Type de carte).
 
 Sur l'ESP32 Lolin32 Lite servant aux essais, la logique est inversée: HIGH éteint la led et LOW l'allume, il faudra peut être inverser la logique sur une autre carte.
+
+## Fichier de test
+
+https://github.com/Jodaille/VespaVelutinaAudioRecords/blob/main/complets/2020-09-23-092858.ogg?raw=true
+
+Avec 920 de valeur, en écoutant via un PC et Audacity en ajustant un peu le niveau, le frelon est détecté. Après le Koutish de la raquette de badmington, le frelon est au sol battant des ailes, la détection tout de même :-)
+
+d'autres fichiers sont disponibles:
+
+https://github.com/Jodaille/VespaVelutinaAudioRecords/tree/main/complets
