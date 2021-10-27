@@ -4,6 +4,7 @@
 
 - Installation de la carte ESP8266 dans l'IDE Arduino (cf: https://randomnerdtutorials.com/how-to-install-esp8266-board-arduino-ide/)
 - Installation de la librairie ArduinoFFT (https://github.com/kosme/arduinoFFT) depuis le getionnaire de librairies de l'IDE Arduino
+- Installation de la librairie Adafruit_ADS1X15 https://github.com/adafruit/Adafruit_ADS1X15
 
 ## Raccordements
 
