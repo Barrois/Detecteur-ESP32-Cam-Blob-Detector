@@ -1,5 +1,9 @@
 # Détecteur acoustique de frelon pour ESP8266
 
+L'objectif est de faire un détecteur bas coût avec la possibilité d'ajuster la détection en fonction du frelon asiatique. 
+En effet le poids et la taille du frelon asiatique varient avec l'avancée de la saison et l'abondance de la nourriture,
+ce qui entraine des variations du pic de détection qu'il faut pouvoir régler in situ, d'ou cemontage avec un potentiomètre
+
 ## Pré requis
 
 - Installation de la carte ESP8266 dans l'IDE Arduino (cf: https://randomnerdtutorials.com/how-to-install-esp8266-board-arduino-ide/)
