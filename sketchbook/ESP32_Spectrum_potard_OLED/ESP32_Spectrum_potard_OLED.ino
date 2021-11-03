@@ -21,7 +21,7 @@ const int PIN_SDA = 26;
 const int PIN_SCL = 27; 
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
-#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+#define SCREEN_HEIGHT 32 // OLED display height, in pixels
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #define OLED_RESET     4 // Reset pin # (or -1 if sharing Arduino reset pin)
@@ -60,7 +60,7 @@ int Cpt_Attaque=0;
 
 void displayParameters(int range,int pic, bool detected) {
   display.clearDisplay();
-  display.setTextSize(2.5);      // Normal 1:1 pixel scale
+  display.setTextSize(1.5);      // Normal 1:1 pixel scale
   display.setTextColor(SSD1306_WHITE); // Draw white text
   display.setCursor(0, 0);     // Start at top-left corner
   //display.cp437(true);         // Use full 256 char 'Code Page 437' font

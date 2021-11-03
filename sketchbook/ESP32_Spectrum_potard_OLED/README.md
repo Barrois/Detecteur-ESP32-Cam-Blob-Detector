@@ -19,7 +19,7 @@ qu'un message lors d'une détection.
 
 - le micro (ici type MAX9814) est relié sur le GPIO 33, ADC1_CH5 (cf: microPIN 33)
 
-- un écran OLED de 128x64 pixels en I2C sur GPIO 26 (PIN_SDA) et GPIO 27 (PIN_SCL);
+- un écran OLED de 128x32 pixels en I2C sur GPIO 26 (PIN_SDA) et GPIO 27 (PIN_SCL);
 
 
 ## Détection
