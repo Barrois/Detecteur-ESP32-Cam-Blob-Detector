@@ -21,7 +21,7 @@ qu'un message lors d'une détection.
 
 - un écran OLED de 128x32 pixels en I2C sur GPIO 26 (PIN_SDA) et GPIO 27 (PIN_SCL);
 
-
+![Schema Breadboard](/sketchbook/ESP32_Spectrum_potard_OLED/ESP32_Spectrum_potard_OLED.png "Schema Breadboard")
 ## Détection
 
 
